@@ -18,6 +18,9 @@
 
 `oc expose svc blue --name=blue --hostname=blue.$SUBDOMAIN --path=/sample`
 
+You can repeat this process for a green deployment by copying a different .war file
+to git repo's deployments directory.
+
 Before defining the production route, delete the blue or green test route 
 created above to avoid router confilcts.
 
