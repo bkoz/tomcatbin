@@ -12,7 +12,7 @@
 
 `oc get is`
 
-`oc create deploymentconfig blue --image=<registry-service-ip>:5000/binary/blue:latest`
+`oc create deploymentconfig blue --image=**<registry-service-ip>**:5000/binary/blue:latest`
 
 `oc expose dc blue --port=8080`
 
