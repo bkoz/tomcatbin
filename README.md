@@ -1,11 +1,6 @@
-# tomcatbin#
-#
 # Binary deployment from a local git repo to a Tomcat container using OpenShift v3.3
-#
 
-#
-
-SUBDOMAIN=ose-apps.haveopen.com
+`SUBDOMAIN=ose-apps.haveopen.com`
 
 git clone https://github.com/bkoz/tomcatbin.git
 
@@ -23,20 +18,18 @@ oc expose dc blue --port=8080
 
 oc expose svc blue --name=blue --hostname=blue.$SUBDOMAIN --path=/sample
 
-#
-# Before defining the production route, delete the blue or green test route 
-# created above to avoid router confilcts.
-#
+## Before defining the production route, delete the blue or green test route 
+## created above to avoid router confilcts.
 oc delete route blue
 
 oc expose svc blue --name=production --hostname=production.$SUBDOMAIN --path=/sample
 
-#
-# After each new build finished, a manual deployment is necessary unless an auto trigger is setup.
+
+## After each new build finished, a manual deployment is necessary unless an auto trigger is setup.
 oc deploy blue --latest
 
-#
-# Optionally create an auto trigger in the deployment config. 
+
+## Optionally create an auto trigger in the deployment config. 
 oc edit dc/blue
 
 triggers:
