@@ -30,12 +30,12 @@ created above to avoid router confilcts.
 `oc expose svc blue --name=production --hostname=production.$SUBDOMAIN --path=/sample`
 
 
-## After each new build finished, a manual deployment is necessary unless an auto trigger is setup.
+After each new build finished, a manual deployment is necessary unless an auto trigger is setup.
 
 `oc deploy blue --latest`
 
 
-## Optionally create an auto trigger in the deployment config. 
+Optionally create an auto trigger in the deployment config. 
 
 `oc edit dc/blue`
 
