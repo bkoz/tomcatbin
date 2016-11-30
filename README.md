@@ -18,20 +18,25 @@
 
 `oc expose svc blue --name=blue --hostname=blue.$SUBDOMAIN --path=/sample`
 
-## Before defining the production route, delete the blue or green test route 
-## created above to avoid router confilcts.
-oc delete route blue
+Before defining the production route, delete the blue or green test route 
+created above to avoid router confilcts.
 
-oc expose svc blue --name=production --hostname=production.$SUBDOMAIN --path=/sample
+`oc delete route blue`
+
+
+`oc expose svc blue --name=production --hostname=production.$SUBDOMAIN --path=/sample`
 
 
 ## After each new build finished, a manual deployment is necessary unless an auto trigger is setup.
-oc deploy blue --latest
+
+`oc deploy blue --latest`
 
 
 ## Optionally create an auto trigger in the deployment config. 
-oc edit dc/blue
 
+`oc edit dc/blue`
+
+```
 triggers:
 - imageChangeParams:
     automatic: true
@@ -43,4 +48,4 @@ triggers:
       namespace: binary
   type: ImageChange
 - type: ConfigChange
-
+```
