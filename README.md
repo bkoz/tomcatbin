@@ -1,23 +1,22 @@
 # Binary deployment from a local git repo to a Tomcat container using OpenShift v3.3
 
-`SUBDOMAIN=ose-apps.haveopen.com
+`SUBDOMAIN=ose-apps.haveopen.com`
 
-git clone https://github.com/bkoz/tomcatbin.git
+`git clone https://github.com/bkoz/tomcatbin.git`
 
-oc new-project binary
+`oc new-project binary`
 
-oc new-build --image-stream=jboss-webserver30-tomcat7-openshift --name=blue --binary=true
+`oc new-build --image-stream=jboss-webserver30-tomcat7-openshift --name=blue --binary=true`
 
-oc start-build blue --from-repo=tomcatbin
+`oc start-build blue --from-repo=tomcatbin`
 
-oc get is
+`oc get is`
 
-oc create deploymentconfig blue --image=<registry-service-ip>:5000/binary/blue:latest
+`oc create deploymentconfig blue --image=<registry-service-ip>:5000/binary/blue:latest`
 
-oc expose dc blue --port=8080
+`oc expose dc blue --port=8080`
 
-oc expose svc blue --name=blue --hostname=blue.$SUBDOMAIN --path=/sample
-`
+`oc expose svc blue --name=blue --hostname=blue.$SUBDOMAIN --path=/sample`
 
 ## Before defining the production route, delete the blue or green test route 
 ## created above to avoid router confilcts.
