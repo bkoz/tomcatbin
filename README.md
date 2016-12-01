@@ -14,25 +14,52 @@ Edit the SUBDOMAIN variable to match your OpenShift DNS wildcard subdomain.
 
 `oc start-build blue --from-repo=tomcatbin`
 
+Wait for the build to and registry push to finish.
+
+`oc logs bc/blue`
+
+```
+...
+Pushed 7/7 layers, 100% complete
+Push successful
+```
+Create a deployment config using the image stream info.
+
 `oc get is`
 
 `oc create deploymentconfig blue --image=<registry-service-ip>:5000/binary/blue:latest`
 
+Expose the blue application and create a route for it.
+
 `oc expose dc blue --port=8080`
 
-`oc expose svc blue --name=blue --hostname=blue.$SUBDOMAIN --path=/sample`
+`oc expose svc blue --name=blue --hostname=blue.$SUBDOMAIN --path=/blue`
 
 Get the hostname of the route and visit your application using a web browser.
 
 `oc get route`
 
-After each new build finished, a manual deployment is necessary unless an auto trigger is setup.
+After each subsequent start-build finishes, a manual deployment is necessary unless an auto trigger is setup.
 
 `oc deploy blue --latest`
 
 
 ### Optional steps: 
 
+#### Blue/Green Deployment
+
+To simulate a blue/green deployment, copy the blue or green .war file
+to `ROOT.war`
+
+`cp tomcatbin/deployments/blue.war tomcatbin/deployments/ROOT.war`
+
+`oc start-build --from-repo=tomcatbin`
+
+`oc deploy blue --latest`
+
+`oc delete route blue`
+
+`oc expose service blue --hostname=production.$SUBDOMAIN`
 
 #### Triggers
 
@@ -55,25 +82,3 @@ triggers:
 - type: ConfigChange
 ```
 
-#### Blue/Green Deployment
-
-To simulate a blue/green deployment, copying the blue or green .war file
-into the deployments directory as `ROOT.war`
-
-`cp blue.war deployments/ROOT.war`
-
-`oc start-build --from-repo=tomcatbin`
-
-`oc deploy blue --latest`
-
-`oc delete route blue`
-
-`oc expose service blue --hostname=production.$SUB_DOMAIN`
-
-
-Before defining the production route, delete the blue or green test route 
-created above to avoid router confilcts.
-
-`oc delete route blue`
-
-`oc expose svc blue --name=production --hostname=production.$SUBDOMAIN `
