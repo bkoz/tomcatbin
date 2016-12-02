@@ -1,6 +1,6 @@
-# Binary deployments with OpenShift v3.3
+# Binary deployments to Tomcat with OpenShift v3.3
 
-## Deploy a .war file from a local directory to a Tomcat container.
+## How to deploy a war file from a local directory to a Tomcat container.
 
 Edit the SUBDOMAIN and OPENSHIFT_SERVER variables to match your environment.
 
@@ -25,7 +25,7 @@ oc new-build --image-stream=jboss-webserver30-tomcat7-openshift --name=sample --
 oc start-build sample --from-dir=source
 ```
 
-Wait for the build to and registry push to suceed.
+Wait for the build and registry push to suceed.
 
 `oc logs bc/sample --follow`
 
