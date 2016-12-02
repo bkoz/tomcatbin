@@ -1,22 +1,33 @@
-# Binary deployment from a local git repo to a Tomcat container using OpenShift v3.3
+# Binary deployments with OpenShift v3.3
 
-Edit the SUBDOMAIN variable to match your OpenShift DNS wildcard subdomain.
+## Deploy a .war file from a local directory to a Tomcat container.
 
-`SUBDOMAIN=ose-apps.haveopen.com`
+Edit the SUBDOMAIN and OPENSHIFT_SERVER variables to match your environment.
 
-`git clone https://github.com/bkoz/tomcatbin.git`
+```
+SUBDOMAIN=ose-apps.haveopen.com
+OPENSHIFT_SERVER=masteroselab-bkocp33-utzuqe0l.srv.ravcloud.com
+```
 
-`oc login`
+Clone this git repo locally.
 
-`oc new-project binary`
+```
+git clone https://github.com/bkoz/tomcatbin.git
+cd tomcatbin
+```
+Login to OpenShift, create a project, a new build and start the build.
 
-`oc new-build --image-stream=jboss-webserver30-tomcat7-openshift --name=blue --binary=true`
+```
+oc login $OPENSHIFT_SERVER:8443
 
-`oc start-build blue --from-repo=tomcatbin`
+oc new-project binary
+oc new-build --image-stream=jboss-webserver30-tomcat7-openshift --name=sample --binary=true
+oc start-build sample --from-dir=source
+```
 
-Wait for the build to and registry push to finish.
+Wait for the build to and registry push to suceed.
 
-`oc logs bc/blue`
+`oc logs bc/sample --follow`
 
 ```
 ...
@@ -25,48 +36,49 @@ Push successful
 ```
 Create a deployment config using the image stream info.
 
-`oc get is`
+```
+oc get is
 
-`oc create deploymentconfig blue --image=<registry-service-ip>:5000/binary/blue:latest`
+oc create deploymentconfig sample --image=<registry-service-ip>:5000/binary/sample:latest
+```
 
-Expose the blue application and create a route for it.
+Wait for the deployment pod to suceed.
 
-`oc expose dc blue --port=8080`
+```
+oc logs dc/sample --follow
+...
+$ oc logs dc/sample --follow
+--> Scaling sample-1 to 1
+--> Waiting up to 10m0s for pods in deployment sample-1 to become ready
+--> Success
+```
 
-`oc expose svc blue --name=blue --hostname=blue.$SUBDOMAIN --path=/blue`
+Expose the sample application and create a route for it.
 
+```
+oc expose dc sample --port=8080
+oc expose svc sample --name=sample --hostname=sample.$SUBDOMAIN --path=/sample
+```
 Get the hostname of the route and visit your application using a web browser.
 
-`oc get route`
+```
+oc get route
+```
 
 After each subsequent start-build finishes, a manual deployment is necessary unless an auto trigger is setup.
 
-`oc deploy blue --latest`
-
+```
+oc deploy sample --latest
+```
 
 ### Optional steps: 
-
-#### Blue/Green Deployment
-
-To simulate a blue/green deployment, copy the blue or green .war file
-to `ROOT.war`
-
-`cp tomcatbin/deployments/blue.war tomcatbin/deployments/ROOT.war`
-
-`oc start-build --from-repo=tomcatbin`
-
-`oc deploy blue --latest`
-
-`oc delete route blue`
-
-`oc expose service blue --hostname=production.$SUBDOMAIN`
 
 #### Triggers
 
 Create an auto trigger in the deployment config so the application is automatically 
 deployed after a new build. 
 
-`oc edit dc/blue`
+`oc edit dc/sample`
 
 ```
 triggers:
@@ -76,7 +88,7 @@ triggers:
     - default-container
     from:
       kind: ImageStreamTag
-      name: blue:latest
+      name: sample:latest
       namespace: binary
   type: ImageChange
 - type: ConfigChange
