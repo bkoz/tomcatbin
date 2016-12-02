@@ -65,7 +65,8 @@ Get the hostname of the route and visit your application using a web browser.
 
 ```
 oc get route
-
+```
+```
 NAME      HOST/PORT                      PATH      SERVICES   PORT      TERMINATION
 sample    sample.ose-apps.haveopen.com   /sample   sample     8080      
 ```
