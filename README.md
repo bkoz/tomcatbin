@@ -34,8 +34,9 @@ Wait for the build and registry push to suceed.
 Pushed 7/7 layers, 100% complete
 Push successful
 ```
-Create a deployment config using the image stream info. Replace the `<registry-service-ip>`
-with what is returned.
+
+Create a deployment config. Replace `<registry-service-ip>`
+with what is returned from `oc get is`.
 
 ```
 oc get is
