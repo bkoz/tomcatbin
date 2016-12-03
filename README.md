@@ -41,6 +41,8 @@ oc create deploymentconfig sample --image=<registry-service-ip>:5000/binary/samp
 Follow the deployment logs and wait for the deployment pod to suceed.
 ```
 oc logs dc/sample --follow
+```
+```
 ...
 --> Scaling sample-1 to 1
 --> Waiting up to 10m0s for pods in deployment sample-1 to become ready
