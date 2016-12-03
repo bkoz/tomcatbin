@@ -54,6 +54,10 @@ Type `ctrl-c` to stop following.
 ```
 oc logs sample-<deployment#>-<pod-id> -f
 ```
+```
+2016-12-03 08:03:57,950 [main] INFO  org.apache.catalina.startup.Catalina- Server startup in 5913 ms
+<ctrl-c>
+```
 
 Expose the sample application and create a route for it.
 ```
