@@ -12,7 +12,7 @@ Clone this git repo locally.
 git clone https://github.com/bkoz/tomcatbin.git
 cd tomcatbin
 ```
-Login to OpenShift, create a project, a new build and start the build.
+Login to OpenShift, create a project and  new build then start the build.
 ```
 oc login $OPENSHIFT_SERVER:8443
 
