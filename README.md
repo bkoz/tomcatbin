@@ -53,7 +53,10 @@ $ oc logs dc/sample --follow
 --> Scaling sample-1 to 1
 --> Waiting up to 10m0s for pods in deployment sample-1 to become ready
 --> Success
+
+oc logs sample-<deployment#>-<pod-id> -f
 ```
+Once the sample pod is running, follow the logs and wait for Catalina Server to finish starting.
 
 Expose the sample application and create a route for it.
 
@@ -71,16 +74,16 @@ NAME      HOST/PORT                      PATH      SERVICES   PORT      TERMINAT
 sample    sample.ose-apps.haveopen.com   /sample   sample     8080      
 ```
 
-After each subsequent start-build finishes, a manual deployment is necessary unless an auto trigger is setup.
 
+### Optional steps: 
+
+#### Re-builds
+After each subsequent start-build finishes, a manual deployment is necessary unless an auto trigger is setup.
 ```
 oc deploy sample --latest
 ```
 
-### Optional steps: 
-
 #### Triggers
-
 Create an auto trigger in the deployment config so the application is automatically 
 deployed after a new build. 
 
