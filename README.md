@@ -52,6 +52,7 @@ oc logs dc/sample --follow
 Once the sample pod is running, follow the logs and wait for Catalina Server to finish starting.
 Type `ctrl-c` to stop following.
 ```
+oc get pods
 oc logs sample-<deployment#>-<pod-id> -f
 ```
 ```
