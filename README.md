@@ -24,6 +24,8 @@ oc start-build sample --from-dir=source
 Follow the build logs and wait for the build and registry push to suceed.
 ```
 oc logs bc/sample --follow
+```
+```
 ...
 Pushed 7/7 layers, 100% complete
 Push successful
