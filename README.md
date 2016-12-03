@@ -1,7 +1,7 @@
 # Binary deployments to Tomcat with OpenShift v3.3
 
 ## How to deploy a war file from a local directory to a Tomcat container.
-Edit the SUBDOMAIN and OPENSHIFT_SERVER variables to match your environment.
+Edit the `SUBDOMAIN` and `OPENSHIFT_SERVER` variables to match your environment.
 ```
 SUBDOMAIN=ose-apps.haveopen.com
 OPENSHIFT_SERVER=masteroselab-bkocp33-utzuqe0l.srv.ravcloud.com
