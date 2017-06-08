@@ -31,8 +31,7 @@ Pushed 7/7 layers, 100% complete
 Push successful
 ```
 
-Create a deployment config. Replace `<registry-service-ip>`
-with what is returned from `oc get is`.
+Create a deployment config. 
 ```
 image=`oc get is sample --template={{.status.dockerImageRepository}}`
 oc create deploymentconfig sample --image=$image:latest
