@@ -34,8 +34,8 @@ Push successful
 Create a deployment config. Replace `<registry-service-ip>`
 with what is returned from `oc get is`.
 ```
-oc get is
-oc create deploymentconfig sample --image=<registry-service-ip>:5000/binary/sample:latest
+image=`oc get is sample --template={{.status.dockerImageRepository}}`
+oc create deploymentconfig sample --image=$image:latest
 ```
 
 Follow the deployment logs and wait for the deployment pod to suceed.
