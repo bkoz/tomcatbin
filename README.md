@@ -17,7 +17,7 @@ Login to OpenShift, create a project and  new build then start the build.
 oc login $OPENSHIFT_SERVER:8443
 
 oc new-project binary
-oc new-build --image-stream=jboss-webserver30-tomcat7-openshift --name=sample --binary=true
+oc new-build --image-stream=jboss-webserver30-tomcat8-openshift --name=sample --binary=true
 oc start-build sample --from-dir=source
 ```
 
@@ -56,7 +56,7 @@ Once the sample pod is running, follow the logs and wait for Catalina Server to 
 Expose the sample application and create a route for it.
 ```
 oc expose dc sample --port=8080
-oc expose svc sample --name=sample --hostname=sample.$SUBDOMAIN --path=/sample
+oc expose svc sample --name=sample --hostname=sample.$SUBDOMAIN 
 ```
 
 Get the hostname of the route and visit your application using a web browser.
