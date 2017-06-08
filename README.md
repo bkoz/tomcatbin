@@ -65,7 +65,7 @@ oc get route
 ```
 ```
 NAME      HOST/PORT                      PATH      SERVICES   PORT      TERMINATION
-sample    sample.ose-apps.haveopen.com   /sample   sample     8080      
+sample    sample.ose-apps.haveopen.com             sample     8080      
 ```
 
 ### Optional steps: 
