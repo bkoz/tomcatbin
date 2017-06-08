@@ -73,7 +73,7 @@ sample    sample.ose-apps.haveopen.com   /sample   sample     8080
 #### Re-builds
 After each subsequent start-build finishes, a manual deployment is necessary unless an auto trigger is setup.
 ```
-oc deploy sample --latest
+oc rollout latest dc/sample
 ```
 
 #### Triggers
